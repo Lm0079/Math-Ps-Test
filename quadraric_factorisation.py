@@ -1,21 +1,21 @@
 import sys
 import re
 import math
-#regexSub substitutes a sequence of charaters in a string
+#regex_sub substitutes a sequence of charaters in a string
 def regex_sub(string,sub,regex):
     return re.sub(regex,sub,string)
-#removePower will remove the power symbol within a string if present
+#remove_power will remove the power symbol within a string if present
 def remove_power(component):
     return regex_sub(component,"","\^[0-2]")  
 
-#substituteVariable will remove ny algebraic varaibles from the string and replace with a integer if necessary
+#substitute_variable will remove ny algebraic varaibles from the string and replace with a integer if necessary
 def substitute_variable(component):
     if re.search("[0-9]+",component)!= None:
         return regex_sub(component,"","[a-zA-Z]")
     else:
         return regex_sub(component,"1","[a-zA-Z]")
 
-#findingTerms
+#finding_terms
 def finding_terms(input):
     
     quadRegex = "[+-]?[0-9]*[a-zA-Z]\^2"
@@ -28,7 +28,7 @@ def finding_terms(input):
         single = remove_power(single.group())
     else:
         single = "0"
-    input= regex_sub(input,"",singleRegex)
+    input = regex_sub(input,"",singleRegex)
     coeffient = remove_power(re.search("[+-]?[0-9]*",input).group())
     
     # If there is no coeffient then set it to 0
@@ -40,14 +40,14 @@ def finding_terms(input):
   
     return int(quadValue),int(singleValue),int(coeffient)
     
-#gcdCalculator calcualtes the greatest common denomiator
+#gcd_calculator calcualtes the greatest common denomiator
 def gcd_calculator(a,b):
     while b:
         temp = a
         a = b
         b = temp%b
     return abs(a)
-#displayNum converts integer to string with correct sign
+#display_num converts integer to string with correct sign
 def display_num(x):
     if x>1:
         return " + "+str(x)
@@ -56,7 +56,7 @@ def display_num(x):
         
     else:
         return " - "+str(abs(x))
-#getSolution
+#get_solution returns the solutions numerator and denominator
 def get_solution(solNumber,denominator):
     # Greatest common denominator for each solution value
     solGcd = gcd_calculator(solNumber,denominator)
@@ -77,9 +77,9 @@ def main():
     sol2Number = -b-determinate**(1/2)
     denominator = 2.0*a
     
-    # Checks they are integers and not floats -
+    # Checks they are integers and not floats 
     if not (sol1Number.is_integer() and sol2Number.is_integer()) or not denominator.is_integer():
-        print("no clean factorization available")
+        print("Clean factorization not available")
     else:
 
         sol1Number,sol1Denominator = get_solution(sol1Number,denominator)
